@@ -6,14 +6,14 @@ A SystemVerilog implementation of a 32-bit RISC-V Arithmetic Logic Unit (ALU), d
 
 ## Table of Contents
 
-* [What is an RV32I ALU?](https://www.google.com/search?q=%23what-is-an-rv32i-alu)
-* [ALU Operation Encoding](https://www.google.com/search?q=%23alu-operation-encoding)
-* [Detailed Architecture & Working Principle](https://www.google.com/search?q=%23detailed-architecture--working-principle)
-* [Timing Constraints & Delay Derivation](https://www.google.com/search?q=%23timing-constraints--delay-derivation)
-* [Hardware Limitations & Bitstream Issues](https://www.google.com/search?q=%23hardware-limitations--bitstream-issues)
-* [Testbench Output & Verification](https://www.google.com/search?q=%23testbench-output--verification)
-* [Running the Project in Vivado](https://www.google.com/search?q=%23running-the-project-in-vivado)
-* [Project Files](https://www.google.com/search?q=%23project-files)
+- [What is an RV32I ALU?](#what-is-an-rv32i-alu)
+- [ALU Operation Encoding](#alu-operation-encoding)
+- [Detailed Architecture and Working Principle](#architecture-and-working-principle)
+- [Timing Constraints and Delay Derivation](#timing-constraints-and-delay-derivation)
+- [Hardware Limitations and Bitstream Issues](#hardware-limitations-and-bitstream-issues)
+- [Testbench Output and Verification](#testbench-output-and-verification)
+- [Running the Project in Vivado](#running-the-project-in-vivado)
+- [Project Files](#project-files)
 
 ---
 
