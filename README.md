@@ -56,7 +56,7 @@ The 4-bit `alu_op` control input routes execution to specific computational func
 | `0110` | **ALU_SRL** | Shift Right Logical | $Y = A \gg B[4:0]$ (Zero-filled) |
 | `0111` | **ALU_SRA** | Shift Right Arithmetic | $Y = A \ggg B[4:0]$ (Sign-extended) |
 | `1000` | **ALU_OR** | Bitwise OR | $Y = A \mid B$ |
-| `1001` | **ALU_AND** | Bitwise AND | $Y = A  \&  B$ |
+| `1001` | **ALU_AND** | Bitwise AND | Y = A & B |
 
 ---
 
@@ -105,7 +105,6 @@ The module `alu_rv32i` is constructed as a continuous combinational network. The
 Instead of building distinct subtractor and magnitude comparator structures, a single 33-bit helper wire calculates subtraction with sign extension:
 
 assign sub_res = {1'b0, A} - {1'b0, B};  
-$$\text{sub\_res} = \{1'b0, A\} - \{1'b0, B\}$$
 
 ### 2. Signed Comparison (`SLT`) & Overflow Handling
 
@@ -115,7 +114,6 @@ Direct subtraction ($A - B$) can cause 32-bit signed integer overflow when compa
 - If $A[31] == B[31]$, overflow cannot occur, and the sign bit of the subtraction result (`sub_res[31]`) safely indicates whether $A < B$.
 
 assign slt_val = (A[31] != B[31]) ? A[31] : sub_res[31];
-$$\text{slt\_val} = (A[31] \neq B[31]) ? A[31] : \text{sub\_res}[31]$$
 
 ### 3. Shift Operations & Operand Truncation
 
@@ -147,14 +145,14 @@ set_output_delay -clock virt_clk 2.000 [get_ports {Y[*] zero}]
 
 The worst-case propagation path through a 32-bit combinational ALU runs from the input ports, through the ripple/carry adder chain of the subtractor, across the multiplexer tree, and down through the 32-bit `OR`-reduction tree of the `zero` flag generator.
 
-$$\text{Required Period} \ge T_{\text{comb\_max}} + T_{\text{input\_delay}} + T_{\text{output\_delay}} + T_{\text{uncertainty}}$$
+$$T_{\text{period}} \ge T_{\text{comb}} + T_{\text{input}} + T_{\text{output}} + T_{\text{uncertainty}}$$
 
 Substituting the physical parameters for the Spartan-7 (`-1` speed grade) target device:
 
-- **Worst-case combinational path delay ($T_{\text{comb\_max}}$):** $14.569\text{ ns}$
-- **External input setup delay ($T_{\text{input\_delay}}$):** $2.000\text{ ns}$
-- **External output delay ($T_{\text{output\_delay}}$):** $2.000\text{ ns}$
-- **Clock uncertainty & jitter ($T_{\text{uncertainty}}$):** $0.025\text{ ns}$
+- **Worst-case combinational path delay ($T_{\text{comb}}$):** $14.569\text{ ns}$
+- **External input setup delay ($T_{\text{input}}$):** $2.000\text{ ns}$[cite: 1]
+- **External output delay ($T_{\text{output}}$):** $2.000\text{ ns}$[cite: 1]
+- **Clock uncertainty and jitter ($T_{\text{uncertainty}}$):** $0.025\text{ ns}$
 
 $$\text{Period} \ge 14.569 + 2.000 + 2.000 + 0.025 = 18.594\text{ ns} \approx 18.6\text{ ns}$$
 
