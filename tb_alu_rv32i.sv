@@ -60,7 +60,7 @@ module tb_alu_rv32i;
         input [256:1] test_name;
         begin
             test_count = test_count + 1;
-            #1; // Allow combinational settling
+            // Allow combinational settling
             if (Y !== expected_Y || zero !== expected_zero) begin
                 $display("[FAIL] Test %0d (%s): A=0x%h, B=0x%h, op=%b | Expected: Y=0x%h, Zero=%b | Got: Y=0x%h, Zero=%b", 
                          test_count, test_name, A, B, alu_op, expected_Y, expected_zero, Y, zero);
@@ -76,9 +76,7 @@ module tb_alu_rv32i;
         $display("       STARTING RV32I ALU SELF-CHECKING TB        ");
         $display("==================================================");
 
-        // ----------------------------------------------------
         // 1. ARITHMETIC OPERATIONS & ZERO FLAG
-        // ----------------------------------------------------
         alu_op = ALU_ADD; A = 32'h0000_000F; B = 32'h0000_0001;
         check_result(32'h0000_0010, 1'b0, "ADD Basic");
 
@@ -89,9 +87,7 @@ module tb_alu_rv32i;
         alu_op = ALU_SUB; A = 32'h1234_5678; B = 32'h1234_5678;
         check_result(32'h0000_0000, 1'b1, "SUB Equal -> Zero Flag High");
 
-        // ----------------------------------------------------
         // 2. SHIFT OPERATIONS (SLL, SRL, SRA)
-        // ----------------------------------------------------
         // SLL (Logical Shift Left)
         alu_op = ALU_SLL; A = 32'h0000_0001; B = 32'd4;
         check_result(32'h0000_0010, 1'b0, "SLL Shift Left 4 bits");
@@ -108,9 +104,7 @@ module tb_alu_rv32i;
         alu_op = ALU_SLL; A = 32'h0000_0001; B = 32'd36; 
         check_result(32'h0000_0010, 1'b0, "SLL Truncated Shift Amount B[4:0]");
 
-        // ----------------------------------------------------
         // 3. COMPARISON OPERATIONS & CORNER CASES (SLT / SLTU)
-        // ----------------------------------------------------
         // SLT: Both Positive (3 < 5)
         alu_op = ALU_SLT; A = 32'd3; B = 32'd5;
         check_result(32'h0000_0001, 1'b0, "SLT Signed Pos < Pos (True)");
@@ -137,9 +131,7 @@ module tb_alu_rv32i;
         alu_op = ALU_SLTU; A = 32'h0000_0001; B = 32'hFFFF_FFFF;
         check_result(32'h0000_0001, 1'b0, "SLTU Unsigned 0x1 < 0xFFFFFFFF (True)");
 
-        // ----------------------------------------------------
         // 4. BITWISE LOGIC OPERATIONS
-        // ----------------------------------------------------
         alu_op = ALU_AND; A = 32'hFF00_AA55; B = 32'hF0F0_FFFF;
         check_result(32'hF000_AA55, 1'b0, "AND Basic");
 
@@ -149,9 +141,7 @@ module tb_alu_rv32i;
         alu_op = ALU_XOR; A = 32'hFFFF_FFFF; B = 32'h1234_5678;
         check_result(32'hEDCB_A987, 1'b0, "XOR Basic");
 
-        // ----------------------------------------------------
         // SUMMARY
-        // ----------------------------------------------------
         $display("==================================================");
         if (error_count == 0) begin
             $display("   TEST PASSED SUCCESSFULLY (%0d/%0d TESTS)", test_count, test_count);
